@@ -1,55 +1,83 @@
 package com.swufe.finalapp;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DBHelper dBHelper;
+    private List<RecordBean> recordBeanList;
+    private Adapter adapter;
+    private ListView listItem;
+    private Button add;
+    public static final int SEND_CORD = 1111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //初始化控件
+        initView();
+        
+        //显示数据库中的记录到列表控件
+        dBHelper= new DBHelper(this);
+        showData();
+                
+        //添加记录按钮，跳转到BodyActivity
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this,BodyActivity.class);
+                startActivityForResult(intent,SEND_CORD);
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    //显示数据库中的记录到列表控件
+    private void showData() {
+        if(recordBeanList != null){
+            recordBeanList.clear();
+        }
+        recordBeanList = dBHelper.listAll();  //查询数据
+        adapter = new Adapter(this,recordBeanList);
+        listItem.setAdapter(adapter);
+
+        //点击列表项目，进入BodyActivity界面的编辑状态
+        listItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                RecordBean recordBean = recordBeanList.get(i);
+                Intent intent = new Intent(MainActivity.this,BodyActivity.class);
+                intent.putExtra("id",recordBean.getId());
+                intent.putExtra("curContent",recordBean.getCurContent());
+                startActivityForResult(intent,SEND_CORD);
+            }
+        });
+
+        //长按删除列表数据项
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    /*//从BodyActivity界面返回后，刷新列表，显示数据
+    protected void onActivityResult(int requestCode,int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SEND_CORD && resultCode == RESULT_OK){
+            //查询保存在数据库中的全部数据
+            showData();
         }
+    }*/
 
-        return super.onOptionsItemSelected(item);
+    private void initView() {
+        listItem = (ListView) findViewById(R.id.list_item);
+        add = (Button) findViewById(R.id.add_list);
     }
 }

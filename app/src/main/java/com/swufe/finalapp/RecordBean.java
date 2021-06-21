@@ -5,13 +5,15 @@ public class RecordBean {
 
     private String id;          //每条记录的id,即编号
     private String curContent;  //记录内容
+    private String time;        //创建时间
 
     public RecordBean() {
     }
 
-    public RecordBean(String id, String curContent) {
+    public RecordBean(String id, String curContent, String time) {
         this.id = id;
         this.curContent = curContent;
+        this.time = time;
     }
 
     public String getId() {
@@ -28,5 +30,13 @@ public class RecordBean {
 
     public void setCurContent(String curContent) {
         this.curContent = curContent;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

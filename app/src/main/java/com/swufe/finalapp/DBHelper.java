@@ -15,15 +15,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     //数据库
-    private static final String DB_NAME = "NoteDB1.db";     //数据库名
-    public static final String TB_NAME = "tb_note1";        //表名
-    public static final String ID = "id";                  //id字段
-    public static final String CONTENT = "curContent";  //记录内容字段
+    private static final String DB_NAME = "NoteDB.db";     //数据库名
+    public static final String TB_NAME = "tb_note";        //表名
+    public static final String ID = "id";                   //id字段
+    public static final String CONTENT = "curContent";      //记录内容字段
+    public static final String TIME = "time";               //创建时间字段
 
     //创建数据表的sql语句
     public static final String CREATE_TABLE = "CREATE TABLE "+ TB_NAME
             +"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + CONTENT + " TEXT)";
+            + CONTENT + " TEXT, "
+            + TIME + " TEXT)";
 
 
     //创建数据表对象
@@ -46,9 +48,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //向数据库添加记录
-    public long add(String curContent){
+    public long add(String curContent,String time){
         ContentValues values = new ContentValues();
         values.put(CONTENT,curContent);
+        values.put(TIME,time);
         return db.insert(TB_NAME, null, values); //返回值>0，表示添加成功
     }
 
@@ -62,7 +65,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public int update(String id, String curContent) {
         ContentValues values = new ContentValues();
         values.put(CONTENT,curContent);
-        return db.update(TB_NAME, values, "id=?'", new String[]{id});  //根据id修改；返回值的作用：判断修改的记录条数是否为0
+        return db.update(TB_NAME, values, "id=?", new String[]{id});  //根据id修改；返回值的作用：判断修改的记录条数是否为0
     }
 
     //查询全部记录
@@ -73,8 +76,9 @@ public class DBHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                String id = String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(ID)));
                String curContent  = cursor.getString(cursor.getColumnIndexOrThrow(CONTENT));
+               String time  = cursor.getString(cursor.getColumnIndexOrThrow(TIME));
                //生成记录对象
-               RecordBean bean = new RecordBean(id,curContent);
+               RecordBean bean = new RecordBean(id,curContent,time);
                //将记录对象添加到集合中
                recordBeanList.add(bean);
             }
@@ -83,3 +87,4 @@ public class DBHelper extends SQLiteOpenHelper {
         return recordBeanList;
     }
 }
+

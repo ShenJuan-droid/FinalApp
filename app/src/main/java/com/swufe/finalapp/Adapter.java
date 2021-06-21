@@ -54,14 +54,17 @@ public class Adapter extends BaseAdapter {
 
         //给记录控件赋值
         viewHolder.item.setText(recordBean.getCurContent());
+        viewHolder.time.setText(recordBean.getTime());
         return itemView;
     }
 
     class ViewHolder{
         TextView item;
+        TextView time;
 
         public ViewHolder(View itemView){
             item = itemView.findViewById(R.id.itemTitle);
+            time = itemView.findViewById(R.id.time);
         }
     }
 

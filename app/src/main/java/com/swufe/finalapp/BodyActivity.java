@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BodyActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText noteContent;
@@ -54,6 +57,7 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.save:
                 //获得用户输入内容
                 String noteContent1 = noteContent.getText().toString().trim();
+                String time = getTime();
                 //判断是新添加保存还是修改后保存
                 if(id != null){
                     //修改后保存
@@ -68,7 +72,7 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
                 }else{
                     //新添加保存
                     if(noteContent1.length()>0){
-                        long n = dBHelper.add(noteContent1);
+                        long n = dBHelper.add(noteContent1,time);
                         if(n>0){
                             Toast.makeText(this,"添加成功",Toast.LENGTH_SHORT).show();
                             setResult(RESULT_OK);
@@ -78,6 +82,12 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private String getTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
     }
 
     private void initListener() {

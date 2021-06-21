@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">备忘录</string>
 
+    <string name="note">备忘录</string>
     <string name="add_list">新建</string>
 
     <string name="save">保存</string>
@@ -8,4 +9,5 @@
     <string name="back">返回</string>
 
     <string name="itemTitle">标题</string>
+    <string name="time">创建时间</string>
 </resources>

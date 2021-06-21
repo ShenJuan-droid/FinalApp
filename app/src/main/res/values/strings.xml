@@ -5,4 +5,7 @@
 
     <string name="save">保存</string>
     <string name="delete">删除</string>
+    <string name="back">返回</string>
+
+    <string name="itemTitle">标题</string>
 </resources>

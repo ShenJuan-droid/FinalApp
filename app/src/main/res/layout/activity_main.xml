@@ -15,9 +15,10 @@
         tools:layout_editor_absoluteY="1dp">
 
         <ListView
-            android:id="@+id/list_item"
+            android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:dividerHeight="1dp">
 
         </ListView>
     </LinearLayout>

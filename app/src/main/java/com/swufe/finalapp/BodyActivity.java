@@ -10,10 +10,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class BodyActivity extends AppCompatActivity implements View.OnClickListener{
-    
+
     private EditText noteContent;
     private Button save;
     private Button delete;
+    private Button back;
     private DBHelper dBHelper;
     private String id;
 
@@ -41,12 +42,17 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
         //id不存在则为添加记录
     }
 
+    //保存、删除、返回功能的实现
     public void onClick(View view){
         switch(view.getId()){
             case R.id.delete:
                 noteContent.setText("");
                 break;
+            case R.id.back:
+                finish();
+                break;
             case R.id.save:
+                //获得用户输入内容
                 String noteContent1 = noteContent.getText().toString().trim();
                 //判断是新添加保存还是修改后保存
                 if(id != null){
@@ -77,11 +83,13 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
     private void initListener() {
         save.setOnClickListener(this);
         delete.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
     private void initView() {
         noteContent = (EditText) findViewById(R.id.note_content);
         save = (Button) findViewById(R.id.save);
         delete = (Button) findViewById(R.id.delete);
+        back = (Button) findViewById(R.id.back);
     }
 }

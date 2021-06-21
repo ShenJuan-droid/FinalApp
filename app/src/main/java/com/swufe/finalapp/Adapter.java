@@ -21,14 +21,18 @@ public class Adapter extends BaseAdapter {
         this.recordBeanList = recordBeanList;
     }
 
+    //获取记录条数
     public int getCount(){
+        //三木运算符
         return recordBeanList == null ? 0 : recordBeanList.size();
     }
 
+    //获取集合指定位置的记录
     public Object getItem(int i){
         return recordBeanList.get(i);
     }
 
+    //获取集合中记录的编号
     public long getItemId(int i){
         return i;
     }
@@ -37,10 +41,12 @@ public class Adapter extends BaseAdapter {
         //可复用记录的方法
         ViewHolder viewHolder;
         if(itemView == null){
+            //新记录
             itemView = LayoutInflater.from(context).inflate(R.layout.list_item,parent,false);
             viewHolder = new ViewHolder(itemView);
             itemView.setTag(viewHolder);
         }else{
+            //已存在的记录
             viewHolder = (ViewHolder) itemView.getTag();
         }
         //取集合中记录内容

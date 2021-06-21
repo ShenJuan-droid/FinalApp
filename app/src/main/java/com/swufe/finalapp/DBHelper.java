@@ -18,7 +18,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "NoteDB1.db";     //数据库名
     public static final String TB_NAME = "tb_note1";        //表名
     public static final String ID = "id";                  //id字段
-    public static final String CURCONTEXT = "curContent";  //记录内容字段
+    public static final String CONTENT = "curContent";  //记录内容字段
+
+    //创建数据表的sql语句
+    public static final String CREATE_TABLE = "CREATE TABLE "+ TB_NAME
+            +"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + CONTENT + " TEXT)";
 
 
     //创建数据表对象
@@ -27,40 +32,37 @@ public class DBHelper extends SQLiteOpenHelper {
     //构造方法
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, VERSION);   //创建数据库
-        db = this.getWritableDatabase();   //实例化，创建可读写数据表
+        db = this.getWritableDatabase();   //初始化，创建可读写数据表
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //创建数据表
-        db.execSQL("CREATE TABLE "+TB_NAME+"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + CURCONTEXT +" TEXT)");
+        db.execSQL(CREATE_TABLE);
     }
 
     @Override
-    //?
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists tb_note");
-        onCreate(db);
-
     }
 
     //向数据库添加记录
     public long add(String curContent){
         ContentValues values = new ContentValues();
-        values.put(CURCONTEXT, curContent);
-        return db.insert(TB_NAME, null, values);
+        values.put(CONTENT,curContent);
+        return db.insert(TB_NAME, null, values); //返回值>0，表示添加成功
     }
+
 
     //删除记录
     public int delete(String id){
-        return db.delete(TB_NAME, "id=?", new String[]{id});
+        return db.delete(TB_NAME, "id=?", new String[]{id}); //返回值的作用：判断删除的记录条数是否为0，为0则删除失败，不为0则删除成功
     }
 
     //修改记录
     public int update(String id, String curContent) {
         ContentValues values = new ContentValues();
-        values.put(CURCONTEXT, curContent);
-        return db.update(TB_NAME, values, "id=?'", new String[]{id});
+        values.put(CONTENT,curContent);
+        return db.update(TB_NAME, values, "id=?'", new String[]{id});  //根据id修改；返回值的作用：判断修改的记录条数是否为0
     }
 
     //查询全部记录
@@ -69,18 +71,15 @@ public class DBHelper extends SQLiteOpenHelper {
         List<RecordBean> recordBeanList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-               /* RecordBean bean = new RecordBean();
-                bean.setId(cursor.getInt(cursor.getColumnIndex(ID)));
-                bean.setCurContent(cursor.getString(cursor.getColumnIndex(CURCONTEXT)));
-                recordBeanList.add(bean);*/
-               String id = String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
-               String curContent  = cursor.getString(cursor.getColumnIndexOrThrow("CURCONTEXT"));
+               String id = String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(ID)));
+               String curContent  = cursor.getString(cursor.getColumnIndexOrThrow(CONTENT));
+               //生成记录对象
                RecordBean bean = new RecordBean(id,curContent);
+               //将记录对象添加到集合中
                recordBeanList.add(bean);
             }
             cursor.close();
         }
         return recordBeanList;
-
     }
 }

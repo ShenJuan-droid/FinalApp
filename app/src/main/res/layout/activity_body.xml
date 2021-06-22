@@ -13,33 +13,48 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="top"
-        android:hint="请输入内容" />
+        android:hint="请输入内容"
+        android:textColor="#683525"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#ABD6CCB5">
 
         <Button
             android:id="@+id/save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/save" />
+            android:background="#ECE9D9"
+            android:text="@string/save"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp"/>
 
         <Button
             android:id="@+id/delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/delete" />
+            android:background="#ECE9D9"
+            android:text="@string/delete"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp"/>
 
         <Button
             android:id="@+id/back"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/back" />
+            android:background="#ECE9D9"
+            android:text="@string/back"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp"/>
     </LinearLayout>
 
 </LinearLayout>

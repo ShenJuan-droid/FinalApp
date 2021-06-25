@@ -4,19 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class Adapter extends BaseAdapter {
+public class Adapter extends ArrayAdapter {
 
     private Context context;
     private List<RecordBean> recordBeanList;
 
-    public Adapter(@NonNull Context context, @NonNull List<RecordBean> recordBeanList) {
+    public Adapter(@NonNull Context context, int resource, @NonNull List<RecordBean> recordBeanList) {
+        super(context, resource, recordBeanList);
         this.context = context;
         this.recordBeanList = recordBeanList;
     }

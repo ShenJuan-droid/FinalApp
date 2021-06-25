@@ -70,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //查询全部记录
     public List<RecordBean> listAll() {
-        Cursor cursor = db.query(TB_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(TB_NAME, null, null, null, null, null, TIME +" desc");
         List<RecordBean> recordBeanList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {

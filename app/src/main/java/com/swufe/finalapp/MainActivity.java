@@ -2,8 +2,11 @@ package com.swufe.finalapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +16,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "intent" ;
     private DBHelper dBHelper;
     private List<RecordBean> recordBeanList;
     private Adapter adapter;
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //显示数据库中的记录到列表控件
         recordBeanList = dBHelper.listAll();  //查询数据
-        adapter = new Adapter(this,recordBeanList);  //将集合传给适配器
+        adapter = new Adapter(this,R.layout.list_item,recordBeanList);  //将集合传给适配器
         listview.setAdapter(adapter);  //将适配器添加到布局
 
         //点击列表项目，进入BodyActivity界面的编辑状态
@@ -67,6 +71,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //长按删除列表数据项
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.i(TAG, "onItemLongClick: 长按列表项position=" + position);
+                //删除操作
+                //构造对话框进行确认操作
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("提示").setMessage("请确认是否删除当前数据").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG, "onClick: 对话框事件处理");
+                        recordBeanList.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                }).setNegativeButton("否",null);
+
+                builder.create().show();
+                Log.i(TAG, "onItemLongClick: size=" + recordBeanList.size());
+
+                return true;
+            }
+        });
 
     }
 

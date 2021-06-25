@@ -20,14 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:background="#ABD6CCB5">
+        android:background="#CA7360">
 
         <Button
             android:id="@+id/save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ECE9D9"
+            android:background="#CF9385"
             android:text="@string/save"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="7dp"
@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ECE9D9"
+            android:background="#CF9385"
             android:text="@string/delete"
             android:layout_marginTop="4dp"
             android:layout_marginRight="7dp"
@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#ECE9D9"
+            android:background="#CF9385"
             android:text="@string/back"
             android:layout_marginTop="4dp"
             android:layout_marginRight="7dp"

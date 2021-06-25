@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ABD6CCB5"
+    android:background="#CA7360"
     tools:context=".MainActivity">
 
     <ListView
@@ -13,30 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#EEEEEE"
-        android:divider="#ABD6CCB5"
-        android:dividerHeight="7dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp">
+        android:background="#FEFEFE"
+        android:divider="#CA7360"
+        android:dividerHeight="1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
 
     </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#ABD6CCB5">
+        android:layout_height="100dp"
+        android:background="#CA7360">
 
         <Button
             android:id="@+id/add_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="@string/add_list"
-            android:background="#ECE9D9"
+            android:textSize="16dp"
+            android:background="#CF9385"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"/>
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="9dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -16,13 +17,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "intent" ;
+    private static final String TAG = "main" ;
     private DBHelper dBHelper;
     private List<RecordBean> recordBeanList;
     private Adapter adapter;
     private ListView listview;
     private Button add;
-    private static final int SEND_CORD = 1111;  //请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //初始化控件
-        initView();
+        listview = (ListView) findViewById(R.id.listview);
+        add = (Button) findViewById(R.id.add_list);
         
         //显示数据库中的记录到列表控件
         dBHelper= new DBHelper(this);
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,BodyActivity.class);
-                startActivityForResult(intent,SEND_CORD);
+                startActivityForResult(intent,1);
             }
         });
     }
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,BodyActivity.class);
                 intent.putExtra("id",recordBean.getId());
                 intent.putExtra("curContent",recordBean.getCurContent());
-                startActivityForResult(intent,SEND_CORD);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -100,14 +101,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //请求码和返回码
-        if(requestCode == SEND_CORD && resultCode == RESULT_OK){
+        if(requestCode == 1 && resultCode == 2){
             //查询保存在数据库中的全部数据
             showData();
         }
-    }
-
-    private void initView() {
-        listview = (ListView) findViewById(R.id.listview);
-        add = (Button) findViewById(R.id.add_list);
     }
 }
